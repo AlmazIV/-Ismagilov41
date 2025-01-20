@@ -23,6 +23,7 @@ namespace Исмагилов41
         public AddEditPage()
         {
             InitializeComponent();
+            
         }
     }
 }
