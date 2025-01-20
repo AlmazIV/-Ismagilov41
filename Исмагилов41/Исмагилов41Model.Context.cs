@@ -19,8 +19,8 @@ namespace Исмагилов41
 
         public static Исмагилов41Entities GetContext()
         {
-            if(_context==null)
-                _context=new Исмагилов41Entities();
+            if (_context == null)
+                _context = new Исмагилов41Entities();
             return _context;
         }
         public Исмагилов41Entities()

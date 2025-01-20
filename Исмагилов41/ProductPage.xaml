@@ -9,7 +9,63 @@
       Title="ProductPage" FontFamily="Comic Sans MS">
 
     <Grid>
-        <ListView Name="ProductListView">
+        <!-- Определение строк для расположения элементов -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Для фильтрации, сортировки и поиска -->
+            <RowDefinition Height="*"/>
+            <!-- Для списка продуктов -->
+        </Grid.RowDefinitions>
+
+        <!-- Поле фильтрации, сортировки и поиска -->
+        <Grid Grid.Row="0" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <!-- Для поиска -->
+                <ColumnDefinition Width="300"/>
+                <!-- Для сортировки -->
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="200"/>
+
+                <!-- Для фильтрации -->
+            </Grid.ColumnDefinitions>
+
+            <!-- Поле поиска -->
+            <StackPanel Orientation="Horizontal" Grid.Column="0">
+                <TextBlock Text="Поиск" Width="90" Height="40" Margin="0,0,3,0" FontSize="14"/>
+                <TextBox Name="SearchTextBox" TextChanged="SearchTextBox_TextChanged" Width="140" FontSize="15" Margin="3"/>
+            </StackPanel>
+
+            <!-- Кнопки сортировки -->
+            <StackPanel Orientation="Vertical" Grid.Column="1">
+                <RadioButton Content="По возрастанию стоимости" GroupName="Sort"
+                             Width="250" FontSize="14" Checked="RBurronUp_Checked"
+                             Name="RBurronUp" Margin="0,0,0,5"/>
+                <RadioButton Content="По убыванию стоимости" GroupName="Sort"
+                             Width="250" FontSize="14" Checked="RButtonDown_Checked"
+                             Name="RButtonDown"/>
+            </StackPanel>
+
+            <!-- Фильтрация -->
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="Фильтрация по скидке" Width="180" FontSize="14"></TextBlock>
+
+                <ComboBox Name="ComboType" SelectionChanged="ComboType_SelectionChanged"
+              FontSize="14" Width="200">
+                    <TextBlock>Все</TextBlock>
+                    <TextBlock>от 0 до 9,99%</TextBlock>
+                    <TextBlock>от 10 до 14,99%</TextBlock>
+                    <TextBlock>от 15% и более</TextBlock>
+                </ComboBox>
+            </StackPanel>
+
+            <!-- TextBlock для отображения количества продуктов -->
+            <TextBlock Name="ProductCountTextBlock" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20" Margin="10,0,10,0" />
+
+        </Grid>
+
+        <!-- Список продуктов -->
+        <ListView Name="ProductListView" Grid.Row="1">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -17,7 +73,6 @@
                             <!-- Увеличено пространство для изображения -->
                             <ColumnDefinition Width="175" />
                             <ColumnDefinition Width="900" />
-
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
@@ -44,21 +99,22 @@
 
                         <!-- Информация о продукте -->
                         <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" Margin="10,0,0,0">
-                            <TextBlock Text="{Binding ProductName}"  FontWeight="Bold" FontSize="20" TextWrapping="Wrap"/>
+                            <TextBlock Text="{Binding ProductName}" FontWeight="Bold" FontSize="20" TextWrapping="Wrap"/>
                             <TextBlock Text="{Binding ProductDescription}" FontSize="16" Margin="0,5,0,0"/>
                             <TextBlock Text="{Binding ProductManufacturer}" FontSize="16" Margin="0,5,0,0"/>
                             <TextBlock Text="{Binding ProductCost, StringFormat={}{0} рублей}" FontSize="16" Margin="0,5,0,0"/>
                         </StackPanel>
 
+                        <!-- Скидка -->
                         <TextBlock Text="Скидка" FontSize="16" 
-                                       TextAlignment="Right" HorizontalAlignment="Right" 
-                                       VerticalAlignment="Top" Grid.Column="2" Grid.Row="0"/>
+                                   TextAlignment="Right" HorizontalAlignment="Right" 
+                                   VerticalAlignment="Top" Grid.Column="2" Grid.Row="0"/>
 
                         <!-- Размер скидки -->
                         <TextBlock Text="{Binding ProductDiscountAmount, StringFormat={}{0}%}" 
-                                       FontSize="36" FontWeight="Bold" 
-                                       TextAlignment="Right" HorizontalAlignment="Right" 
-                                       VerticalAlignment="Center" Grid.Column="2" Grid.Row="1"/>
+                                   FontSize="36" FontWeight="Bold" 
+                                   TextAlignment="Right" HorizontalAlignment="Right" 
+                                   VerticalAlignment="Center" Grid.Column="2" Grid.Row="1"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
