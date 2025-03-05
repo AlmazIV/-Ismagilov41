@@ -12,27 +12,53 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+
 namespace Исмагилов41
 {
     public partial class ProductPage : Page
     {
+        // Конструктор для авторизованного пользователя
+        public ProductPage(User user)
+        {
+            InitializeComponent();
+            // FIOTB - текстбокс для отображения ФИО
+            FIOTB.Text = user.UserSurname + " " + user.UserName + " " + user.UserPatronymic;
+            switch (user.UserRole)
+            {
+                case 1:
+                    RoleTB.Text = "Клиент";
+                    break;
+                case 2:
+                    RoleTB.Text = "Менеджер";
+                    break;
+                case 3:
+                    RoleTB.Text = "Администратор";
+                    break;
+            }
+            var currentProducts = Исмагилов41Entities.GetContext().Product.ToList();
+            ProductListView.ItemsSource = currentProducts;
+        }
+
+        // Конструктор для гостя
         public ProductPage()
         {
             InitializeComponent();
-            UpdateProducts();  // Вызов метода для инициализации данных и отображения "30 из 30"
+            // При авторизации гостя устанавливаем значения для отображения "гость"
+            FIOTB.Text = "гость";
+            RoleTB.Text = "гость";
+            UpdateProducts();  // Инициализация данных и отображение "30 из 30"
             ComboType.SelectedIndex = 0;
-
         }
 
         private void UpdateProducts()
         {
             var currentProducts = Исмагилов41Entities.GetContext().Product.ToList();
-            // ПОИСК
+            // Поиск
             currentProducts = currentProducts
                 .Where(p => p.ProductName.ToLower().Contains(SearchTextBox.Text.ToLower()))
                 .ToList();
 
-            // СОРТИРОВКА
+            // Сортировка
             if (RButtonDown.IsChecked == true)
             {
                 currentProducts = currentProducts.OrderByDescending(p => p.ProductCost).ToList();
@@ -92,4 +118,3 @@ namespace Исмагилов41
         }
     }
 }
-

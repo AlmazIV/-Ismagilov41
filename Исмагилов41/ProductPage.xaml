@@ -11,14 +11,24 @@
     <Grid>
         <!-- Определение строк для расположения элементов -->
         <Grid.RowDefinitions>
+            <!-- Строка для информации о пользователе -->
             <RowDefinition Height="Auto"/>
-            <!-- Для фильтрации, сортировки и поиска -->
+            <!-- Строка для панели поиска, сортировки и фильтрации -->
+            <RowDefinition Height="Auto"/>
+            <!-- Строка для списка продуктов -->
             <RowDefinition Height="*"/>
-            <!-- Для списка продуктов -->
         </Grid.RowDefinitions>
 
-        <!-- Поле фильтрации, сортировки и поиска -->
-        <Grid Grid.Row="0" Margin="10">
+        <!-- Информация о пользователе -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
+            <TextBlock Text="Вы авторизованы как: " FontSize="16"/>
+            <TextBlock x:Name="FIOTB" FontSize="16" FontWeight="Bold" Margin="5,0,10,0"/>
+            <TextBlock Text="Роль: " FontSize="16"/>
+            <TextBlock x:Name="RoleTB" FontSize="16" FontWeight="Bold"/>
+        </StackPanel>
+
+        <!-- Панель фильтрации, сортировки и поиска -->
+        <Grid Grid.Row="1" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300"/>
                 <!-- Для поиска -->
@@ -26,8 +36,7 @@
                 <!-- Для сортировки -->
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="200"/>
-
-                <!-- Для фильтрации -->
+                <!-- Можно добавить еще колонку для дополнительных элементов -->
             </Grid.ColumnDefinitions>
 
             <!-- Поле поиска -->
@@ -48,10 +57,9 @@
 
             <!-- Фильтрация -->
             <StackPanel Grid.Column="2">
-                <TextBlock Text="Фильтрация по скидке" Width="180" FontSize="14"></TextBlock>
-
+                <TextBlock Text="Фильтрация по скидке" Width="180" FontSize="14"/>
                 <ComboBox Name="ComboType" SelectionChanged="ComboType_SelectionChanged"
-              FontSize="14" Width="200">
+                          FontSize="14" Width="200">
                     <TextBlock>Все</TextBlock>
                     <TextBlock>от 0 до 9,99%</TextBlock>
                     <TextBlock>от 10 до 14,99%</TextBlock>
@@ -60,12 +68,11 @@
             </StackPanel>
 
             <!-- TextBlock для отображения количества продуктов -->
-            <TextBlock Name="ProductCountTextBlock" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20" Margin="10,0,10,0" />
-
+            <TextBlock Name="ProductCountTextBlock" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20" Margin="10,0,10,0"/>
         </Grid>
 
         <!-- Список продуктов -->
-        <ListView Name="ProductListView" Grid.Row="1">
+        <ListView Name="ProductListView" Grid.Row="2">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>

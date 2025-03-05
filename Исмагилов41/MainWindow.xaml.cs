@@ -23,14 +23,15 @@ namespace Исмагилов41
         public MainWindow()
         {
             InitializeComponent();
-            MainFrame.Navigate(new ProductPage());
+            MainFrame.Navigate(new AuthPage());
             Manager.MainFrame=MainFrame;
         }
 
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.GoBack();
+            Manager.MainFrame.Navigate(new AuthPage());
         }
+
 
         private void MainFrame_ContentRendered(object sender, EventArgs e)
         {
